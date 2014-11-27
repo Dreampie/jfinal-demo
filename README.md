@@ -19,7 +19,7 @@ jfinal demo  程序，使用bootstrap+本人编写的多款插件
 
 3.admin密码shengmu
 
-4.熊希Maven，[我的Blog](http://my.oschina.net/wangrenhui1990/blog/337583)
+4.学习使用Maven，[我的Blog](http://my.oschina.net/wangrenhui1990/blog/337583)
 
 基本功能如下：
 1.使用jfinal-shiro实现数据库级别的权限灵活定制，和freemarker的权限标签
