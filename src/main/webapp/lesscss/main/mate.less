@@ -1,0 +1,103 @@
+// -----------------------------------
+// MATE: CSS helpers
+// -----------------------------------
+// author: wangrenhui
+// -----------------------------------
+
+// ------------------------ GRADIENTS
+.gradient(@from:#000, @to:#EEE) {
+  background: @from;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(@from), to(@to));
+  background-image: -moz-linear-gradient(top, @from, @to);
+}
+
+// ---------------------- TRANSITIONS
+.transition(@range: all, @time: 500ms, @ease: ease-in-out) {
+  -moz-transition: @range @time @ease;
+  -webkit-transition: @range @time @ease;
+  -o-transition: @range @time @ease;
+  transition: @range @time @ease;
+}
+
+//-------------------------ANIMATION
+.animation(@name:rave,@time:500ms,@count:infinite) {
+  animation: @name @time @count;
+  -moz-animation: @name @time @count;
+  -webkit-animation: @name @time @count;
+}
+
+.transition-timing-function(@ease: ease-in-out) {
+  -webkit-transition-timing-function: @ease;
+  -moz-transition-timing-function: @ease;
+  -ms-transition-timing-function: @ease;
+  -o-transition-timing-function: @ease;
+  transition-timing-function: @ease;
+}
+
+// ------------------------ TRANSFORMS
+.transform(@props) {
+  -ms-transform: @props;
+  -moz-transform: @arguments;
+  -webkit-transform: @arguments;
+  -o-transform: @arguments;
+  transform: @arguments;
+}
+
+// --------------------------- HELPERS
+.ellipsis() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.clear() {
+  &:after {
+    display: block;
+    content: " ";
+    clear: both;
+  }
+}
+
+//----------------------------------BOXSHADOW
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow: @style @c;
+}
+
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+
+//.box-shadow(@style, @rgba) {
+//  -webkit-box-shadow: @style @rgba;
+//  box-shadow: @style @rgba;
+//}
+
+.box-shadow(@style1, @rgba1,@style2, @rgba2) {
+  -webkit-box-shadow: inset @style1 @rgba1,@style2 @rgba2;
+  box-shadow: inset @style1 @rgba1,@style2 @rgba2;
+}
+
+//-----------------column flow
+.column-width(@width) {
+  -moz-column-width: @width;
+  -ms-column-width: @width;
+  -webkit-column-width: @width;
+  -o-column-width: @width;
+  column-width: @width;
+}
+
+//-------------------border radius
+.border-radius-right(@value) {
+  border-top-right-radius: @value;
+  border-bottom-right-radius: @value;
+  -webkit-border-top-right-radius: @value;
+  -webkit-border-bottom-right-radius: @value;
+}
+
+.border-radius-left(@value) {
+  border-top-left-radius: @value;
+  border-bottom-left-radius: @value;
+  -webkit-border-top-left-radius: @value;
+  -webkit-border-bottom-right-radius: @value;
+}

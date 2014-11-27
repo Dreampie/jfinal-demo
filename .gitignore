@@ -1,0 +1,10 @@
+.idea/
+*.iml
+log/
+target/
+
+javascript/
+style/
+js/
+css/
+

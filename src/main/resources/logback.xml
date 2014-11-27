@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+  <!-- 声明变量 -->
+  <substitutionProperty name="log.base" value="./log/jfinal_demo"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%-4relative [%thread] %-5level %logger - %msg%n</pattern>
+    </layout>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%-4relative [%thread] %-5level %logger - %msg%n</pattern>
+    </layout>
+    <File>${log.base}.log</File>
+  </appender>
+
+  <logger name="org.quartz.core" level="info"/>
+  <logger name="org.lesscss" level="info"/>
+  <logger name="cn.dreampie.lesscss" level="info"/>
+  <logger name="cn.dreampie.coffeescript" level="info"/>
+  <logger name="org.apache.shiro" level="error"/>
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT"/>
+    <!--<appender-ref ref="FILE" />-->
+  </root>
+
+</configuration>
