@@ -17,6 +17,8 @@ jfinal demo  程序，使用bootstrap+本人编写的多款插件
 
 2.使用jetty运行项目，运行maven插件jetty:run
 
+3.admin密码shengmu
+
 基本功能如下：
 1.使用jfinal-shiro实现数据库级别的权限灵活定制，和freemarker的权限标签
 
