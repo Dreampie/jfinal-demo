@@ -28,3 +28,8 @@ jfinal demo  程序，使用bootstrap+本人编写的多款插件
 
 还有很多功能大家可以运行之后 慢慢体验
 
+
+![JFINAL_DEMO](http://static.oschina.net/uploads/space/2014/1127/185853_6800_946569.png "JFINAL_DEMO")
+
+![JFINAL_DEMO](http://static.oschina.net/uploads/space/2014/1127/185913_J9zy_946569.png "JFINAL_DEMO")
+
