@@ -1,4 +1,3 @@
-use jfinal_demo;
 
 -- create  area--
 INSERT INTO com_area(id,name,pinyin,pid,area_code,zip_code,left_code,right_code,created_at)

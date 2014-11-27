@@ -1,4 +1,3 @@
-USE jfinal_demo;
 
 -- 区域
 DROP TABLE IF EXISTS ord_region;

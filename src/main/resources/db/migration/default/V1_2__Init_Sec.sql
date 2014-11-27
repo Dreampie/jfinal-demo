@@ -1,4 +1,3 @@
-USE jfinal_demo;
 -- create role--
 
 INSERT INTO sec_role(id,name, value, intro, pid,left_code,right_code,created_at)

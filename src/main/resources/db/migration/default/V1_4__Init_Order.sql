@@ -1,4 +1,3 @@
-USE jfinal_demo;
 
 INSERT INTO ord_product(id,name,category,price,created_at)
 VALUES (1,'环保装','有机奶',7800,current_timestamp);

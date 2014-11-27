@@ -1,4 +1,3 @@
-USE jfinal_demo;
 
 DROP TABLE IF EXISTS sec_user;
 CREATE TABLE sec_user (
