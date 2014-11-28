@@ -84,7 +84,7 @@ define ['app', 'bootstrap-multiselect'], ->
 
   #default init
   $ ->
-    App.Model.Area.query(1,
+    App.Model.Area.query('area.id':1
     (data) ->
       if (data.areas)
         $.areapicker(data.areas,

@@ -1,11 +1,9 @@
-<#include "/view/main/layout.tpl.ftl"/>
+<#include "/view/main/layoutframe.tpl.ftl"/>
 <#include "/view/main/pagination.tpl.ftl"/>
 <!-- build:js -->
 <script data-main="/javascript/app/order/init" src="/webjars/requirejs/2.1.14/require.min.js" charset="utf-8"></script>
 <!-- endbuild -->
-<@layout activebar="order" html_title="我的订单">
-<div class="row">
-  <div class="col-md-8">
+<@layoutframe activebar="order" html_title="我的订单">
     <table class="table table-bordered table-hover" style="<#if data_type?? && data_type?contains('order')>width: 1400px;</#if>">
       <thead>
       <tr>
@@ -74,7 +72,4 @@
     <#if orders?? && orders.list?size gt 0>
       <@paginate currentPage=orders.pageNumber totalPage=orders.totalPage actionUrl=_localUri urlParas=_localParas className="pagination"/>
     </#if>
-  </div>
-  <div class="col-md-4"><#include "/view/main/tip.tpl.ftl"></div>
-</div>
-</@layout>
+</@layoutframe>

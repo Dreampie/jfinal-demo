@@ -3,7 +3,7 @@
 libsources =
 #id like webjars dir
   version:
-    'require-css': '0.1.4'
+    'require-css': '0.1.7'
     'jquery': '2.1.1'
     'nprogress': '0.1.2'
     'bootstrap': '3.3.0'

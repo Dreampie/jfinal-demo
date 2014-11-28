@@ -1,13 +1,11 @@
-<#include "/view/main/layout.tpl.ftl"/>
+<#include "/view/main/layoutframe.tpl.ftl"/>
 <!-- build:js javascript/main.js -->
 <script data-main="/javascript/app/user/init" src="/webjars/requirejs/2.1.14/require.min.js" charset="utf-8"></script>
 <!-- endbuild -->
-<@layout activebar="center" html_title="个人中心">
+<@layoutframe activebar="center" html_title="个人中心">
 <div class="page-header">
   <h1>个人中心</h1>
 </div>
-<div class="row">
-  <div class="col-md-8">
     <#if user??>
       <form id="update_pwd" class="form-horizontal update" role="form" method="post" action="/user/updatePwd">
         <div class="form-group">
@@ -61,10 +59,5 @@
         </div>
       </form>
     </#if>
-  </div>
-  <div class="col-md-4">
-    <#include "/view/main/tip.tpl.ftl">
-  </div>
-</div>
-</@layout>
+</@layoutframe>
 

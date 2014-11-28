@@ -66,7 +66,14 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
         $("input[name='order.delivered_at']").change(->
           $("div.settlement span.delivered_at").text($(this).val())
         )
-      receive: ->
+
+#        App.Model.Address.query(
+#          ,(data)->
+#            if(data.addresses)
+#              $("select[name='order.address_id']").change(->
+#              )
+#        )
+    receive: ->
         modal = App.Service.ConfigSrv.confirmModal((t)->
           App.Model.Order.control(
             'order.id': $("a.receive").attr("orderid")
@@ -158,7 +165,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
     #收货地址
     App.Service.AddressSrv = {
     #form 容器 btn 提交按钮 rst重置按钮
-      newValid: (form, btn, rst)->
+      newValid: (form, btn, rst,toggle)->
         $(form).bootstrapValidator(
           submitButtons: btn
           fields:
@@ -215,6 +222,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
 
           App.Model.Address.save(address, (data)->
             if(data.state == 'success')
+              $(toggle).text('新建')
               newadrDiv.hide()
               o = $("<option value=" + data.address.id + " >" + data.address.name + "</option>")
               select = $("select[name='order.address_id']")
@@ -236,18 +244,25 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
         )
 
     #toggle 切换显示和隐藏的按钮  form容器 btn提交按钮
-      newEvent: (toggle, form, btn)->
+      newEvent: (toggle,select, form, btn,sub)->
         #new address div 显示
         $(toggle).click(->
           if($(form).is(":visible"))
             $(this).text('新建')
             $(form).hide()
+            $(sub).removeAttr('disabled')
+            $(sub).removeClass('disabled')
           else
             $(this).text('取消')
             $(form).show()
+            $(sub).attr('disabled','disabled')
+            $(sub).addClass('disabled')
         )
         #隐藏
-        $(toggle).siblings("div.btn-group").find("ul.dropdown-menu li").click(->
+        $(select).change(->
+          $(toggle).text('新建')
           $(form).hide()
+          $(sub).removeAttr('disabled')
+          $(sub).removeClass('disabled')
         )
     }

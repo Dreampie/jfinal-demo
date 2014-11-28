@@ -1,12 +1,12 @@
 define ['jquery', 'bootstrap', 'nprogress', 'controller', 'model', 'service'],
 ->
   'use strict'
-
+  document.getElementsByTagName("body")[0].style.display='block'
   #progress  bar start
   NProgress.configure({ showSpinner: false })
   NProgress.start()
   $ ->
-
+    $('body').show()
     # IE10 viewport hack for Surface/desktop Windows 8 bug
     # See Getting Started docs for more information
     if (navigator.userAgent.match(/IEMobile\/10\.0/))

@@ -21,7 +21,7 @@
     <bootstrap-multiselect.version>0.9.8</bootstrap-multiselect.version>
     <font-awesome.version>4.1.0</font-awesome.version>
     <requirejs.version>2.1.14-1</requirejs.version>
-    <require-css.version>0.1.4</require-css.version>
+    <require-css.version>0.1.7</require-css.version>
     <druid.version>1.0.9</druid.version>
     <mysql.version>5.1.33</mysql.version>
     <nprogress.version>0.1.2</nprogress.version>

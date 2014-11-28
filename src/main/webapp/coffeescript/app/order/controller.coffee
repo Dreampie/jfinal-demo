@@ -11,14 +11,14 @@ define ['css!/style/app/order/build','app', 'bootstrap-datetimepicker.zh_CN','bo
             App.Service.OrderSrv.branch()
             App.Service.OrderSrv.receive()
             App.Service.OrderSrv.deliver()
-            App.Service.ConfigSrv.multiselect('[name="region_id"]','[name="order.branch_id"]')
+            App.Service.ConfigSrv.multiselect('select[name="region_id"]','select[name="order.branch_id"]')
           when '/build'
             App.Service.OrderSrv.build()
-            App.Service.AddressSrv.newEvent('#newadr', '#newadrDiv', '#newadrBtn')
-            App.Service.AddressSrv.newValid('#newadrDiv', '#newadrBtn', '#newadrRstBtn')
+            App.Service.AddressSrv.newEvent('#newadr','select[name="order.address_id"]', '#newadrDiv', '#newadrBtn','#saveForm button.submit')
+            App.Service.AddressSrv.newValid('#newadrDiv', '#newadrBtn', '#newadrRstBtn','#newadr')
             App.Service.OrderSrv.save('#saveForm','#saveForm button.submit','#newadrDiv')
             App.Service.ConfigSrv.datetimepicker('.form_datetime')
-            App.Service.ConfigSrv.multiselect('[name="order.address_id"]','[name="orderProduct.product_id"]')
+            App.Service.ConfigSrv.multiselect('select[name="order.address_id"]','select[name="orderProduct.product_id"]')
           else
 
     }

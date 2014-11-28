@@ -1,83 +1,75 @@
-<#include "/view/main/layout.tpl.ftl"/>
+<#include "/view/main/layoutframe.tpl.ftl"/>
 <!-- build:js javascript/main.js -->
 <script data-main="/javascript/app/member/init" src="/webjars/requirejs/2.1.14/require.min.js" charset="utf-8"></script>
 <!-- endbuild -->
-<@layout activebar="member" html_title="用户管理">
-<div class="row">
-  <div class="col-md-8">
+<@layoutframe activebar="member" html_title="用户管理">
+<form class="form-horizontal branch" role="form" action="/member/branch" method="get">
+  <div class="form-group">
+    <label class="col-sm-2 control-label" style="text-align: left;width: 100px;">区域/支行:</label>
 
-    <form class="form-horizontal branch" role="form" action="/member/branch" method="get">
-      <div class="form-group">
-        <label class="col-sm-2 control-label" style="text-align: left;width: 100px;">区域/支行:</label>
-
-        <div class="col-sm-8">
-          <select name="region_id" select="${region_id!}">
-            <#if regions?? && regions?size gt 0>
-              <#list regions as region>
-                <option value="${region.id}">${region.name}</option>
-              </#list>
-            </#if>
-            <option value="" selected="selected">请选择</option>
-          </select>
-          <select name="branch_id" select="${(branch_id)!}">
-            <option value="" selected="selected">请选择</option>
-          </select>
-
-          <div class="btn-group">
-            <button type="submit" class="btn btn-default">搜索</button>
-          </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
-          </div>
-        </div>
-      </div>
-    </form>
-
-    <table class="table table-bordered table-hover">
-      <thead>
-      <tr>
-        <th>姓名</th>
-        <th>支行</th>
-        <th>机构代码</th>
-        <th>联系电话</th>
-        <th>登录名</th>
-        <th>创建时间</th>
-        <@shiro.hasPermission name="P_USER_CONTROL">
-          <th>操作</th>
-        </@shiro.hasPermission>
-      </tr>
-      </thead>
-      <tbody>
-        <#if users?? && users.list?size gt 0>
-          <#list users.list as user>
-          <tr>
-            <td>${(user.full_name)!}</td>
-            <td>${(user.branch_name)!}</td>
-            <td>${(user.branch_code)!}</td>
-            <td>${(user.phone)!}</td>
-            <td>${(user.username)!}</td>
-            <td>${(user.created_at)!}</td>
-            <@shiro.hasPermission name="P_USER_CONTROL">
-              <td>
-                <a class="update" userid="${user.id}" href="#updateModal" data-toggle="modal">修改</a>
-                <a class="delete" userid="${user.id}" href="#confirmModal" data-toggle="modal"
-                   data-label="删除" data-content="确认删除？">删除</a>
-              </td>
-            </@shiro.hasPermission>
-          </tr>
+    <div class="col-sm-8">
+      <select name="region_id" select="${region_id!}">
+        <#if regions?? && regions?size gt 0>
+          <#list regions as region>
+            <option value="${region.id}">${region.name}</option>
           </#list>
         </#if>
-      </tbody>
-    </table>
-    <#if orders?? && orders.list?size gt 0>
-      <@paginate currentPage=orders.pageNumber totalPage=orders.totalPage actionUrl=_localUri urlParas=_localParas className="pagination"/>
+        <option value="" selected="selected">请选择</option>
+      </select>
+      <select name="branch_id" select="${(branch_id)!}">
+        <option value="" selected="selected">请选择</option>
+      </select>
+
+      <div class="btn-group">
+        <button type="submit" class="btn btn-default">搜索</button>
+      </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th>姓名</th>
+    <th>支行</th>
+    <th>机构代码</th>
+    <th>联系电话</th>
+    <th>登录名</th>
+    <th>创建时间</th>
+    <@shiro.hasPermission name="P_USER_CONTROL">
+      <th>操作</th>
+    </@shiro.hasPermission>
+  </tr>
+  </thead>
+  <tbody>
+    <#if users?? && users.list?size gt 0>
+      <#list users.list as user>
+      <tr>
+        <td>${(user.full_name)!}</td>
+        <td>${(user.branch_name)!}</td>
+        <td>${(user.branch_code)!}</td>
+        <td>${(user.phone)!}</td>
+        <td>${(user.username)!}</td>
+        <td>${(user.created_at)!}</td>
+        <@shiro.hasPermission name="P_USER_CONTROL">
+          <td>
+            <a class="update" userid="${user.id}" href="#updateModal" data-toggle="modal">修改</a>
+            <a class="delete" userid="${user.id}" href="#confirmModal" data-toggle="modal"
+               data-label="删除" data-content="确认删除？">删除</a>
+          </td>
+        </@shiro.hasPermission>
+      </tr>
+      </#list>
     </#if>
-  </div>
-  <div class="col-md-4">
-    <#include "/view/main/tip.tpl.ftl">
-  </div>
-</div>
+  </tbody>
+</table>
+  <#if orders?? && orders.list?size gt 0>
+    <@paginate currentPage=orders.pageNumber totalPage=orders.totalPage actionUrl=_localUri urlParas=_localParas className="pagination"/>
+  </#if>
 
 
 <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveLabel" aria-hidden="true">
@@ -90,6 +82,7 @@
       <div class="modal-body">
         <form class="form-horizontal save" id="saveForm" role="form" action="/member/control" method="post">
           <input type="hidden" name="do" value="save">
+
           <div class="form-group">
             <label class="col-sm-2 control-label">区域:</label>
 
@@ -187,6 +180,7 @@
         <form class="form-horizontal update" id="updateForm" role="form" action="/member/control" method="post">
           <input type="hidden" name="do" value="update">
           <input type="hidden" name="user.id" value="">
+
           <div class="form-group">
             <label class="col-sm-2 control-label">区域:</label>
 
@@ -271,5 +265,5 @@
     </div>
   </div>
 </div>
-</@layout>
+</@layoutframe>
 
