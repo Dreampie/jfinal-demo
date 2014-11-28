@@ -13,7 +13,7 @@
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <!-- For the Maven Jetty plugin (mvn jetty:run) -->
     <jetty.version>9.1.1.v20140108</jetty.version>
-    <jfinal-dreampie.version>1.1</jfinal-dreampie.version>
+    <jfinal-dreampie.version>1.2</jfinal-dreampie.version>
     <jquery.version>2.1.1</jquery.version>
     <bootstrap.version>3.3.0</bootstrap.version>
     <bootstrapvalidator.version>0.5.2</bootstrapvalidator.version>
@@ -48,12 +48,6 @@
       <groupId>cn.dreampie</groupId>
       <artifactId>jfinal-dreampie</artifactId>
       <version>${jfinal-dreampie.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>cn.dreampie</groupId>
-      <artifactId>jfinal-shiro</artifactId>
-      <version>0.2</version>
     </dependency>
 
     <dependency>

@@ -2,8 +2,6 @@ package com.shengmu.common.web.controller;
 
 import cn.dreampie.captcha.CaptchaRender;
 import cn.dreampie.shiro.core.SubjectKit;
-import cn.dreampie.web.JFController;
-import cn.dreampie.web.filter.ThreadLocalKit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +10,7 @@ import java.util.Map;
 /**
  * Controller
  */
-public class Controller extends JFController {
+public class Controller extends cn.dreampie.web.Controller {
   static String indexView = "/view/index.ftl";
   protected Logger logger = LoggerFactory.getLogger(getClass());
 

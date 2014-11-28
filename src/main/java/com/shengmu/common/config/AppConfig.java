@@ -1,20 +1,20 @@
 package com.shengmu.common.config;
 
 import cn.dreampie.log.Slf4jLogFactory;
+import cn.dreampie.routebind.RouteBind;
 import cn.dreampie.shiro.core.ShiroInterceptor;
 import cn.dreampie.shiro.core.ShiroPlugin;
 import cn.dreampie.shiro.freemarker.ShiroTags;
 import cn.dreampie.sqlinxml.SqlInXmlPlugin;
 import cn.dreampie.tablebind.SimpleNameStyles;
 import cn.dreampie.tablebind.TableBindPlugin;
-import cn.dreampie.web.JFConfig;
+import cn.dreampie.web.Config;
 import cn.dreampie.web.handler.FakeStaticHandler;
 import cn.dreampie.web.handler.ResourceHandler;
 import cn.dreampie.web.handler.SkipHandler;
 import cn.dreampie.web.handler.xss.AttackHandler;
 import cn.dreampie.web.interceptor.UrlInterceptor;
 import cn.dreampie.web.render.JsonErrorRenderFactory;
-import cn.dreampie.web.route.AutoBindRoutes;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.config.*;
@@ -39,7 +39,7 @@ import java.util.Locale;
  * Time: 下午6:28
  * API引导式配置
  */
-public class AppConfig extends JFConfig {
+public class AppConfig extends Config {
   /**
    * 供Shiro插件使用。
    */
@@ -66,8 +66,8 @@ public class AppConfig extends JFConfig {
    */
   public void configRoute(Routes routes) {
     this.routes = routes;
-    AutoBindRoutes autoBindRoutes = new AutoBindRoutes();
-    routes.add(autoBindRoutes);
+    RouteBind routeBind = new RouteBind();
+    routes.add(routeBind);
   }
 
   /**
