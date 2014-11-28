@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>jfinal_demo</groupId>
-  <artifactId>jfinal_demo</artifactId>
+  <groupId>jfinal-demo</groupId>
+  <artifactId>jfinal-demo</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>jfinal_demo Maven Webapp</name>
+  <name>jfinal-demo Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -155,7 +155,7 @@
 
 
   <build>
-    <finalName>jfinal_demo</finalName>
+    <finalName>${project.name}</finalName>
     <plugins>
       <plugin>
         <groupId>cn.dreampie</groupId>
