@@ -38,8 +38,9 @@ public class MailerTest {
 //      System.out.println(ValidateKit.isPhone("11111111111")+"");
 
     HtmlEmail htmlEmail = Mailer.getHtmlEmail("测试", "173956022@qq.com");
-    String cid = htmlEmail.embed(new File(PathKit.getWebRootPath() + "/src/main/webapp/image/favicon.ico"), "1");
-    htmlEmail.setHtmlMsg("<a href='www.dreampie.cn'>Dreampie</a><img src=\"cid:" + cid + "\"'/>");
+    String cid1 = htmlEmail.embed(new File(PathKit.getWebRootPath() + "/src/main/webapp/image/favicon.ico"), "1");
+    String cid2 = htmlEmail.embed(new File(PathKit.getWebRootPath() + "/src/main/webapp/image/app/logo.png"), "2");
+    htmlEmail.setHtmlMsg("<a href='www.dreampie.cn'>Dreampie</a><img src=\"cid:" + cid1 + "\"'/><img src=\"cid:" + cid2 + "\"'/>");
     htmlEmail.send();
   }
 
