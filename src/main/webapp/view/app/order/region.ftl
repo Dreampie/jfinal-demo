@@ -56,8 +56,8 @@
       <#list orders as order>
       <tr>
         <td>${(order.branch_name)!'无'}</td>
-        <td>${((order.total_pay)!0/100)?string('0.00')}</td>
-        <td>${((order.actual_pay)!0/100)?string('0.00')}</td>
+        <td>${(((order.total_pay)!0)/100)?string('0.00')}</td>
+        <td>${(((order.actual_pay)!0)/100)?string('0.00')}</td>
         <#if products?? && products?size gt 0>
           <#assign p_num=0/>
           <#list products as product>
