@@ -22,7 +22,6 @@
          data-date-format="yyyy-mm">
       <input readonly class="form-control" size="7" type="text" name="started_at"
              value="${.now?string('yyyy-MM')}">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
     </div>
   </div>

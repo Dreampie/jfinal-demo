@@ -37,7 +37,7 @@
            data-date-format="yyyy/mm/dd">
         <input readonly class="form-control" size="10" type="text" name="order.delivered_at"
                value="${.now?string('yyyy/MM/dd')}">
-        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+        <#--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
       </div>
       <div class="tip"><i class="fa fa-lightbulb-o"></i>按您所在的区域选择规定时间</div>
