@@ -107,7 +107,7 @@ public class OrderController extends Controller {
 
   @CacheName(AppConstants.DEFAULT_CACHENAME)
   public void region() {
-    keepPara("region_id", "state");
+    keepPara("region_id", "state","started_at");
     //region
     Long regionId = getParaToLong("region_id");
     if (regionId == null) regionId = 1L;
@@ -116,8 +116,10 @@ public class OrderController extends Controller {
     String where = "`branch`.region_id=? AND";
     String started_at = getPara("started_at");
     List<Order> orders = null;
-    if (started_at == null)
+    if (started_at == null) {
       started_at = DateTime.now().toString("yyyy-MM");
+      setAttr("started_at",started_at);
+    }
     if (state == null) {
       where += " DATE_FORMAT(`order`.receipted_at,'%Y-%m')=? OR DATE_FORMAT(`order`.payed_at,'%Y-%m')=? ";
       orders = Order.dao.sumByRegion(where, regionId, started_at, started_at);
