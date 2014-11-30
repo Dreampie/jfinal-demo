@@ -1,7 +1,7 @@
 jfinal_demo
 ===========
 
-jfinal+bootstrap+coffeescript+lesscss+jfinal-plugins
+jfinal+bootstrap+coffeescript+lesscss+jfinal-dreampie(jfinal插件集)
 
 jfinal demo  程序，使用bootstrap+本人编写的多款插件
 
