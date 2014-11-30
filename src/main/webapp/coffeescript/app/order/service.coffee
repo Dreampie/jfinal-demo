@@ -16,6 +16,17 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
     )
     #订单
     App.Service.OrderSrv = {
+      region:(form)->
+        regselect = $("select[name='region_id']")
+        if(regselect.attr("select") && regselect.attr("select") != "")
+          App.Service.ConfigSrv.multiselect().reselect(regselect,regselect.attr("select"))
+        stateInput = $("<input type='hidden' name='state' value=''/>")
+        $("ul.menu-tabs li a").click(->
+          stateInput.val($(this).attr("value"))
+          form = $("form.region")
+          form.append(stateInput)
+          form.submit()
+        )
       branch: ->
         branches = null
         App.Model.Branch.all((data)->

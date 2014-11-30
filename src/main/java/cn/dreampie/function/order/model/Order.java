@@ -1,5 +1,6 @@
 package cn.dreampie.function.order.model;
 
+import cn.dreampie.PinyinSortKit;
 import cn.dreampie.tablebind.TableBind;
 import cn.dreampie.web.model.Model;
 import com.jfinal.plugin.activerecord.Page;
@@ -65,8 +66,28 @@ public class Order extends Model<Order> {
   public Page<Order> paginateByRegion(int pageNumber, int pageSize, String where, Object... paras) {
     String selectSql = " SELECT `order`.* ";
     String fromSql = " FROM ord_order `order`" +
-        " LEFT JOIN ord_branch `branch` ON(`order`.branch_id=`branch`.id)" ;
+        " LEFT JOIN ord_branch `branch` ON(`order`.branch_id=`branch`.id)";
     return dao.paginate(pageNumber, pageSize, selectSql, fromSql + getWhere(where), paras);
+  }
+
+  public List<Order> sumByRegion(String where, Object... paras) {
+
+    String selectSql = "SELECT `branch`.name branch_name,SUM(`order`.total_pay) total_pay,SUM(`order`.actual_pay) actual_pay,";
+    List<Product> products = Product.dao.findBy("`product`.deleted_at is null");
+    int i = 1;
+    int size = products.size();
+    for (Product product : products) {
+      selectSql += "SUM(IF(`orderProduct`.product_id=" + product.get("id") + ",`orderProduct`.num,0)) as product_" + product.get("id");
+      if (i != size) {
+        selectSql += ",";
+      }
+      i++;
+    }
+
+    String fromSql = " FROM ord_order `order` " +
+        " LEFT JOIN ord_order_product `orderProduct` ON(`order`.id=`orderProduct`.order_id) " +
+        " LEFT JOIN ord_branch `branch` ON(`order`.branch_id=`branch`.id) ";
+    return dao.find(selectSql + fromSql + getWhere(where), paras);
   }
 
 }

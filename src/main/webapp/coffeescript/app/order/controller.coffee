@@ -7,6 +7,10 @@ define ['css!/style/app/order/build','app', 'bootstrap-datetimepicker.zh_CN','bo
           when '/'
             App.Service.OrderSrv.receipt()
             App.Service.OrderSrv.cancel()
+          when '/region'
+            App.Service.OrderSrv.region()
+            App.Service.ConfigSrv.datetimepicker('.form_datetime')
+            App.Service.ConfigSrv.multiselect('select[name="region_id"]')
           when '/branch'
             App.Service.OrderSrv.branch()
             App.Service.OrderSrv.receive()

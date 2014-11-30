@@ -4,11 +4,10 @@
 <script data-main="/javascript/app/order/init" src="/webjars/requirejs/2.1.14/require.min.js" charset="utf-8"></script>
 <!-- endbuild -->
 <@layoutframe activebar="branch" html_title="全部订单">
-<form class="form-horizontal branch" role="form" action="/order/branch" method="get">
+<form class="form-inline branch" role="form" action="/order/branch" method="get">
   <div class="form-group">
-    <label class="col-sm-2 control-label" style="text-align: left;width: 100px;">区域/支行:</label>
+    <label class="control-label" style="text-align: left;width: 100px;">区域/支行:</label>
 
-    <div class="col-sm-8">
       <select name="region_id" select="${region_id!}">
         <#if regions?? && regions?size gt 0>
           <#list regions as region>
@@ -21,10 +20,9 @@
         <option value="" selected="selected">请选择</option>
       </select>
 
-      <div class="btn-group">
-        <button type="submit" class="btn btn-default">搜索</button>
-      </div>
-    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">搜索</button>
   </div>
 </form>
 <ul class="nav nav-tabs menu-tabs" role="tablist" style="margin-bottom: 10px">

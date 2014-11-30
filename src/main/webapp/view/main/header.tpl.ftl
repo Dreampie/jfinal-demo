@@ -25,11 +25,17 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/order" class="<#if activebar=='order'>nav-active</#if>">我的订单</a></li>
         <li><a href="/order/build" class="<#if activebar=='build'>nav-active</#if>">新订单</a></li>
-        <li><a href="/order/branch" class="<#if activebar=='branch'>nav-active</#if>">全部订单</a></li>
-        <li><a href="/user/center" class="<#if activebar=='center'>nav-active</#if>">个人中心</a></li>
       <@shiro.hasPermission name="P_ORDER_CONTROL">
-        <li><a href="/member" class="<#if activebar=='member'>nav-active</#if>">用户管理</a></li>
+        <li><a href="/order/branch" class="<#if activebar=='branch'>nav-active</#if>">全部订单</a></li>
       </@shiro.hasPermission>
+      <@shiro.hasPermission name="P_REGION_CONTROL">
+        <li><a href="/order/region" class="<#if activebar=='region'>nav-active</#if>">全部支行</a></li>
+      </@shiro.hasPermission>
+      <@shiro.hasPermission name="P_USER_CONTROL">
+        <li><a href="/member" class="<#if activebar=='member'>nav-active</#if>">全部用户</a></li>
+      </@shiro.hasPermission>
+        <li><a href="/user/center" class="<#if activebar=='center'>nav-active</#if>">个人中心</a></li>
+
       </ul>
     </div>
   </div>
