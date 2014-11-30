@@ -12,7 +12,7 @@ public class LessTest {
   @Test
   public void testCompileLess() throws Exception {
     LessCssPlugin lessCssPlugin = new LessCssPlugin("/src/main/webapp/lesscss/", "/src/main/webapp/style/");
-    lessCssPlugin.start();
+//    lessCssPlugin.start();
 
   }
 

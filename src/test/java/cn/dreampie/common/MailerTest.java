@@ -41,7 +41,7 @@ public class MailerTest {
     String cid1 = htmlEmail.embed(new File(PathKit.getWebRootPath() + "/src/main/webapp/image/favicon.ico"), "1");
     String cid2 = htmlEmail.embed(new File(PathKit.getWebRootPath() + "/src/main/webapp/image/app/logo.png"), "2");
     htmlEmail.setHtmlMsg("<a href='www.dreampie.cn'>Dreampie</a><img src=\"cid:" + cid1 + "\"'/><img src=\"cid:" + cid2 + "\"'/>");
-    htmlEmail.send();
+//    htmlEmail.send();
   }
 
 }

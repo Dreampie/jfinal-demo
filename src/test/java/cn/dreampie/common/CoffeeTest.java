@@ -11,7 +11,7 @@ public class CoffeeTest {
   @Test
   public void testCompileCoffee() throws Exception {
     CoffeeScriptPlugin coffeeScriptPlugin = new CoffeeScriptPlugin("/src/main/webapp/coffeescript/", "/src/main/webapp/javascript/");
-    coffeeScriptPlugin.start();
+//    coffeeScriptPlugin.start();
   }
 
 }
