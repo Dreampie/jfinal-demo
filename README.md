@@ -1,4 +1,4 @@
-jfinal_demo
+jfinal_demo [在线访问](http://jf_demo.jd-app.com)
 ===========
 
 jfinal+bootstrap+coffeescript+lesscss+jfinal-dreampie(jfinal插件集)
