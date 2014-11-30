@@ -3,11 +3,10 @@
 <script data-main="/javascript/app/member/init" src="/webjars/requirejs/2.1.14/require.min.js" charset="utf-8"></script>
 <!-- endbuild -->
 <@layoutframe activebar="member" html_title="用户管理">
-<form class="form-horizontal branch" role="form" action="/member/branch" method="get">
+<form class="form-inline branch" role="form" action="/member/branch" method="get">
   <div class="form-group">
-    <label class="col-sm-2 control-label" style="text-align: left;width: 100px;">区域/支行:</label>
+    <label class="control-label" style="text-align: left;width: 100px;">区域/支行:</label>
 
-    <div class="col-sm-8">
       <select name="region_id" select="${region_id!}">
         <#if regions?? && regions?size gt 0>
           <#list regions as region>
@@ -20,14 +19,14 @@
         <option value="" selected="selected">请选择</option>
       </select>
 
-      <div class="btn-group">
-        <button type="submit" class="btn btn-default">搜索</button>
-      </div>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div class="btn-group">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
-      </div>
-    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">搜索</button>
+  </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="form-group">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
   </div>
 </form>
 
