@@ -33,7 +33,7 @@
     <label class="col-sm-3 control-label">送货日期:</label>
 
     <div class="col-sm-7">
-      <div class="input-group date form_datetime" data-date="${.now?string('yyyy/MM/dd')}"
+      <div class="input-group date form_datetime" data-date="${.now?string('yyyy/MM/dd')}" data-start-date="${.now?string('yyyy/MM/dd')}"
            data-date-format="yyyy/mm/dd">
         <input readonly class="form-control" size="10" type="text" name="order.delivered_at"
                value="${.now?string('yyyy/MM/dd')}">

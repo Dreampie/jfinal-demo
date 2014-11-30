@@ -153,6 +153,8 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                 notEmpty: {}
                 date:
                   format: 'YYYY/MM/DD'
+                  min: $("input[name='order.delivered_at']").parent().attr("data-start-date"),
+                  max: '2020/12/30'
             'order.address_id':
               validators:
                 notEmpty:

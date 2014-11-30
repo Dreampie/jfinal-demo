@@ -98,8 +98,12 @@ define ['app', 'model'], ->
         for e in selector
           if ($(e))
             $(e).each(->
-              if ($(this).attr("date-format") || $(this).attr("data-date-format"))
-                format = $(this).attr("date-format") || $(this).attr("data-date-format")
+              if($(this).attr("data-start-date"))
+                df.startDate=new Date(Date.parse($(this).attr("data-start-date").replace(/-/g, "/")))
+              if($(this).attr("data-end-date"))
+                df.endDate=new Date(Date.parse($(this).attr("data-end-date").replace(/-/g, "/")))
+              if ($(this).attr("data-date-format"))
+                format = $(this).attr("data-date-format")
                 if (format.length == 7)
                   df.minView = 3
                   df.startView = 3

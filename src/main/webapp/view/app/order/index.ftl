@@ -34,9 +34,9 @@
               </#list>
             </#if>
             </td>
-            <td>${order.actual_pay}</td>
-            <td>${order.created_at}</td>
-            <td>${order.delivered_at}</td>
+            <td>${(((order.actual_pay)!0)/100)?string('0.00')}</td>
+            <td>${order.created_at?string('yyyy-MM-dd hh:mm:ss')}</td>
+            <td>${order.delivered_at?string('yyyy-MM-dd')}</td>
             <td>
               <#if states?? && states?size gt 0>
           <#list states as state>
