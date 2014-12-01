@@ -1,5 +1,6 @@
 define ['app', 'bootstrap-multiselect'], ->
   "use strict"
+
   # Main function
   $.fn.areapicker = (areas, options) ->
     $.fn.areapicker.settings = $.extend({}, $.fn.areapicker.defaults, options)
@@ -45,6 +46,23 @@ define ['app', 'bootstrap-multiselect'], ->
           selector.multiselect('setOptions', opt.config)
           selector.multiselect('rebuild')
 
+    getName: (ids...)->
+      if ids.length==1 && ids[0] instanceof Array
+        ids=ids[0]
+      areas = $.fn.areapicker.areas
+      names = []
+      if (areas && areas.length > 0)
+        $.each(areas, (index, element) ->
+          for id in ids
+            if id*1 == element.id
+              names[names.length] = element.name
+        )
+      if names.length == 0
+        return undefined
+      else if names.length == 1
+        return names[0]
+      else
+        return names
   #填充数据
     fillChildren: (pid, level) ->
       opt = $.fn.areapicker.settings
@@ -79,12 +97,11 @@ define ['app', 'bootstrap-multiselect'], ->
           for i in  [level..size]
             $("select." + opt.classes[i]).change()
 
-
   $.areapicker = $.fn.areapicker
 
   #default init
   $ ->
-    App.Model.Area.query('area.id':1
+    App.Model.Area.query('id':1,
     (data) ->
       if (data.areas)
         $.areapicker(data.areas,

@@ -22,6 +22,12 @@ public class Order extends Model<Order> {
     return this.get("products");
   }
 
+  public Address getAddress(){
+    if (this.get("address") == null) {
+      this.put("address", Address.dao.findFirstDetailBy("`address`.id=?", this.get("address_id")));
+    }
+    return this.get("address");
+  }
 
   public boolean receive() {
     this.set("state", 1);

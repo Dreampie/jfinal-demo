@@ -5,7 +5,7 @@
   <artifactId>jfinal-demo</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <name>jfinal-demo-${project.version}</name>
+  <name>jfinal-demo</name>
   <url>http://maven.apache.org</url>
 
   <properties>

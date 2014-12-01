@@ -87,6 +87,7 @@
         </td>
         <@shiro.hasPermission name="P_ORDER_CONTROL">
           <td>
+            <a class="detail" orderid="${order.id}" href="#detailModal" data-toggle="modal">详情</a>
             <#if order.state == 0>
               <a class="receive" orderid="${order.id}" href="#confirmModal" data-toggle="modal"
                  data-label="接收" data-content="确认接收？">接收</a>
@@ -105,4 +106,5 @@
   <#if orders?? && orders.list?size gt 0>
     <@paginate currentPage=orders.pageNumber totalPage=orders.totalPage actionUrl=_localUri urlParas=_localParas className="pagination"/>
   </#if>
+  <#include "/view/app/order/detail.tpl.ftl"/>
 </@layoutframe>

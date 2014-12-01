@@ -5,6 +5,7 @@ define ['css!/style/app/order/build','app', 'bootstrap-datetimepicker.zh_CN','bo
       init: ->
         switch App.Service.ConfigSrv.path("/order")
           when '/'
+            App.Service.OrderSrv.detail()
             App.Service.OrderSrv.receipt()
             App.Service.OrderSrv.cancel()
           when '/region'
@@ -13,6 +14,7 @@ define ['css!/style/app/order/build','app', 'bootstrap-datetimepicker.zh_CN','bo
             App.Service.ConfigSrv.multiselect('select[name="region_id"]')
           when '/branch'
             App.Service.OrderSrv.branch()
+            App.Service.OrderSrv.detail()
             App.Service.OrderSrv.receive()
             App.Service.OrderSrv.deliver()
             App.Service.ConfigSrv.multiselect('select[name="region_id"]','select[name="order.branch_id"]')

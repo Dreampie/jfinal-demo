@@ -16,10 +16,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
     )
     #订单
     App.Service.OrderSrv = {
-      region:(form)->
+      region: (form)->
         regselect = $("select[name='region_id']")
         if(regselect.attr("select") && regselect.attr("select") != "")
-          App.Service.ConfigSrv.multiselect().reselect(regselect,regselect.attr("select"))
+          App.Service.ConfigSrv.multiselect().reselect(regselect, regselect.attr("select"))
         stateInput = $("<input type='hidden' name='state' value=''/>")
         $("ul.menu-tabs li a").click(->
           stateInput.val($(this).attr("value"))
@@ -43,12 +43,12 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                   brhselect.find("option[value='']").before("<option value='" + branch.id + "'>" + branch.name + "</option>")
 
               if(brhselect.attr("select") && brhselect.attr("select") != "")
-                App.Service.ConfigSrv.multiselect().reselect(brhselect,brhselect.attr("select"))
+                App.Service.ConfigSrv.multiselect().reselect(brhselect, brhselect.attr("select"))
               else
                 App.Service.ConfigSrv.multiselect().rebuild("select[name='order.branch_id']")
             )
             if(regselect.attr("select") && regselect.attr("select") != "")
-              App.Service.ConfigSrv.multiselect().reselect(regselect,regselect.attr("select"))
+              App.Service.ConfigSrv.multiselect().reselect(regselect, regselect.attr("select"))
         )
         stateInput = $("<input type='hidden' name='order.state' value=''/>")
         $("ul.menu-tabs li a").click(->
@@ -57,7 +57,44 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
           form.append(stateInput)
           form.submit()
         )
+      detail: ->
+        $('#detailModal').on('show.bs.modal', (e)->
+          btn = $(e.relatedTarget)
+          App.Model.Order.query("order.id": btn.attr("orderid"),
+            (data)->
+              if(data.order)
+                content = $('#detailModal').find("div.detail")
+                content.find("div.code p").html(data.order.code)
+                productP = ""
+                for product in data.order.products
+                  productP += product.name + " X " + product.num + "<br>"
+                content.find("div.product p").html(productP)
+                content.find("div.created_at p").html(data.order.created_at.substring(0, 19))
+                content.find("div.delivered_at p").html(data.order.delivered_at.substring(0, 10))
+                if(data.order.actual_delivered_at != null)
+                  content.find("div.actual_delivered_at p").html(data.order.actual_delivered_at.substring(0, 10))
+                else
+                  content.find("div.actual_delivered_at p").html("未发货")
 
+                if(data.order.receipted_at != null)
+                  content.find("div.receipted_at p").html(data.order.receipted_at)
+                  content.find("div.receipted_at").show()
+                else
+                  content.find("div.receipted_at").hide()
+                if(data.order.payed_at != null)
+                  content.find("div.payed_at p").html(data.order.payed_at)
+                  content.find("div.payed_at").show()
+                else
+                  content.find("div.payed_at").hide()
+                if(data.order.address)
+                  spare = ""
+                  if(data.order.address.spare_name)
+                    spare = data.order.address.spare_name + "," + data.order.address.spare_phone + "<br>"
+                  content.find("div.address p").html(data.order.address.name + "," + data.order.address.phone + "<br>" + spare +
+                    data.order.address.province_name +
+                    "," + data.order.address.city_name + "," + data.order.address.county_name + "," + data.order.address.street)
+          )
+        )
       build: ->
         $("div.settlement span.num").text($("input[name='orderProduct.num']").val())
         $("input[name='orderProduct.num'],select[name='orderProduct.product_id']").change(->
@@ -77,14 +114,29 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
         $("input[name='order.delivered_at']").change(->
           $("div.settlement span.delivered_at").text($(this).val())
         )
-
-#        App.Model.Address.query(
-#          ,(data)->
-#            if(data.addresses)
-#              $("select[name='order.address_id']").change(->
-#              )
-#        )
-    receive: ->
+        addrselect = $("select[name='order.address_id']")
+        addrselect.change(->
+          address = $(this).find("option:selected")
+          ids = [address.attr("provinceid"), address.attr("cityid"), address.attr("countyid")]
+          names = []
+          if $.areapicker.areas
+            names = $.areapicker.Op.getName(ids)
+            names[names.length] = address.attr("street")
+            $("div.addressDetail").text(names.toString())
+          else
+            App.Model.Area.query("ids": ids.toString(), (data)->
+              if(data.areas)
+                for area in data.areas
+                  for id in ids
+                    if(area.id == id * 1)
+                      names[names.length] = area.name
+                names[names.length] = address.attr("street")
+                $("div.addressDetail").html(address.attr("uname") + "," + address.attr("phone") + "<br/>" + names.toString())
+            )
+        )
+        if(addrselect.attr("select") && addrselect.attr("select") != "")
+          App.Service.ConfigSrv.multiselect().reselect(addrselect, addrselect.attr("select"))
+      receive: ->
         modal = App.Service.ConfigSrv.confirmModal((t)->
           App.Model.Order.control(
             'order.id': $("a.receive").attr("orderid")
@@ -133,7 +185,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                 modal.modal("hide")
                 td = t.parent()
                 td.html("")
-                td.siblings().eq(td.index() - 1).text("已取消")
+                td.siblings().eq(td.index() - 1).find("a.cancel").remove()
           )
         )
       save: (form = 'form.save', btn = 'button.submit', diser = '#newadrDiv')->
@@ -178,7 +230,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
     #收货地址
     App.Service.AddressSrv = {
     #form 容器 btn 提交按钮 rst重置按钮
-      newValid: (form, btn, rst,toggle)->
+      newValid: (form, btn, rst, toggle)->
         $(form).bootstrapValidator(
           submitButtons: btn
           fields:
@@ -237,12 +289,12 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             if(data.state == 'success')
               $(toggle).text('新建')
               newadrDiv.hide()
-              o = $("<option value=" + data.address.id + " >" + data.address.name + "</option>")
+              o = $("<option value='" + data.address.id + "' provinceid='" + data.address.province_id +
+                "' cityid='" + data.address.city_id + "'   countyid='" + data.address.county_id +
+                "' street='" + data.address.street + "'>" + data.address.name + "</option>")
               select = $("select[name='order.address_id']")
               select.find("option[value='']").before(o)
-              select.find("option:selected").removeAttr("selected")
-              o.attr("selected", "selected")
-              App.Service.ConfigSrv.multiselect().rebuild("select[name='order.address_id']")
+              App.Service.ConfigSrv.multiselect().reselect("select[name='order.address_id']", data.address.id)
               newadrDiv.bootstrapValidator('resetForm', true)
             else
           )
@@ -257,7 +309,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
         )
 
     #toggle 切换显示和隐藏的按钮  form容器 btn提交按钮
-      newEvent: (toggle,select, form, btn,sub)->
+      newEvent: (toggle, select, form, btn, sub)->
         #new address div 显示
         $(toggle).click(->
           if($(form).is(":visible"))
@@ -268,7 +320,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
           else
             $(this).text('取消')
             $(form).show()
-            $(sub).attr('disabled','disabled')
+            $(sub).attr('disabled', 'disabled')
             $(sub).addClass('disabled')
         )
         #隐藏

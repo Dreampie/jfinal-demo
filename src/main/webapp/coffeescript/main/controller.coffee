@@ -5,7 +5,7 @@ define ['app', 'service'], ->
     App.Controller.Controller = {
       init: ->
         switch App.Service.ConfigSrv.path()
-          when '/tosignin'
+          when '/'
             #验证码
             App.Service.ConfigSrv.captcha('img.captcha')
           else

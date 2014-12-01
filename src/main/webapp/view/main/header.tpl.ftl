@@ -9,7 +9,7 @@
       <li><a href="/signout">退出</a></li>
     </@shiro.authenticated>
     <@shiro.notAuthenticated>
-      <li><a href="/tosignin">登陆</a></li>
+      <li><a href="/">登陆</a></li>
     </@shiro.notAuthenticated>
     </ul>
   </div>

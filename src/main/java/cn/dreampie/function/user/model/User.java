@@ -8,6 +8,7 @@ import cn.dreampie.function.order.model.UserBranch;
 import cn.dreampie.sqlinxml.SqlKit;
 import cn.dreampie.tablebind.TableBind;
 import com.jfinal.plugin.activerecord.Page;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -65,6 +66,52 @@ public class User extends cn.dreampie.shiro.model.User<User> {
     return UserRole.dao.findFirstBy("`userRole`.user_id=?", this.get("id")).get("role_id");
   }
 
+  public List<Role> getRoleChildren() {
+    if (this.get("roleChildren") == null) {
+      //查询当前用户的角色
+      UserRole userRole = UserRole.dao.findFirstBy("`userRole`.user_id=" + this.get("id"));
+      //当前用户的子集角色
+      List<Role> roles = Role.dao.findChildrenById("`role`.deleted_at is null", userRole.get("role_id"));
+      this.put("roleChildren", roles);
+    }
+    return this.get("roleChildren");
+  }
+
+  public long[] getRoleChildrenIds() {
+    if (this.get("roleChildrenIds") == null) {
+      List<Role> roles = getRoleChildren();
+      long[] roleIds = new long[roles.size()];
+      if (roles != null) {
+        int i = 0;
+        for (Role role : roles) {
+          roleIds[i] = role.get("id");
+          i++;
+        }
+      }
+      this.put("roleChildrenIds", roleIds);
+    }
+    return (long[]) this.get("roleChildrenIds");
+  }
+
+  public String getRoleChildrenIdsStr() {
+    if (this.get("roleChildrenIdsStr") == null) {
+      long[] ids = getRoleChildrenIds();
+      ArrayUtils.toString(ids, ",");
+      String idsStr = "";
+      int i = 0;
+      int size = ids.length;
+      for (long id : ids) {
+        idsStr += id + "";
+        if (i < size - 1) {
+          idsStr += ",";
+        }
+        i++;
+      }
+      this.put("roleChildrenIdsStr", idsStr);
+    }
+    return this.get("roleChildrenIdsStr");
+  }
+
   public Branch getBranch() {
     return Branch.dao.findById(getBranchId());
   }
@@ -78,7 +125,7 @@ public class User extends cn.dreampie.shiro.model.User<User> {
   }
 
   public Page<Order> getOrders(int pageNumber, int pageSize) {
-    return Order.dao.paginateBy(pageNumber, pageSize, "`order`.user_id=? ORDER BY `order`.created_at desc", this.get("id"));
+    return Order.dao.paginateBy(pageNumber, pageSize, "`order`.user_id=? ORDER BY `order`.created_at DESC", this.get("id"));
   }
 
   public List<Address> getAddresses() {
@@ -87,32 +134,40 @@ public class User extends cn.dreampie.shiro.model.User<User> {
 
   public User findFirstBranchBy(String where, Object... paras) {
     String selectSql = "SELECT `user`.*,`branch`.id branch_id,`branch`.region_id region_id ";
-    String fromSql = " FROM sec_user `user`  LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
+    String fromSql = " FROM sec_user `user` " +
+        " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
+        " LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
     return dao.findFirst(selectSql + fromSql + getWhere(where), paras);
   }
 
   public List<User> findByBranch(String where, Object... paras) {
-    String sql = "SELECT `user`.* FROM sec_user `user` LEFT JOIN ord_user_branch `userBranch` ON(`user`.id=`userBranch`.user_id) " + getWhere(where);
+    String sql = "SELECT `user`.* FROM sec_user `user` " +
+        " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
+        " LEFT JOIN ord_user_branch `userBranch` ON(`user`.id=`userBranch`.user_id) " + getWhere(where);
     return dao.find(sql, paras);
   }
 
   public Page<User> paginateInfoBy(int pageNumber, int pageSize, String where, Object... paras) {
-    return dao.paginate(pageNumber, pageSize, SqlKit.sql("user.findInfoBySelect"), SqlKit.sql("user.findInfoByExceptSelect") + getWhere(where), paras);
+    return dao.paginate(pageNumber, pageSize, SqlKit.sql("user.findInfoBySelect"), SqlKit.sql("user.findInfoByFrom") + getWhere(where), paras);
   }
 
   public User findFirstInfoBy(String where, Object... paras) {
-    return dao.findFirst(SqlKit.sql("user.findInfoBySelect") + SqlKit.sql("user.findInfoByExceptSelect") + getWhere(where), paras);
+    return dao.findFirst(SqlKit.sql("user.findInfoBySelect") + SqlKit.sql("user.findInfoByFrom") + getWhere(where), paras);
   }
 
   public Page<User> paginateByRegion(int pageNumber, int pageSize, String where, Object... paras) {
     String selectSql = "SELECT `user`.*,`branch`.name branch_name,`branch`.org_code branch_code ";
-    String fromSql = "FROM sec_user `user`  LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
+    String fromSql = "FROM sec_user `user` " +
+        " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
+        " LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
     return dao.paginate(pageNumber, pageSize, selectSql, fromSql + getWhere(where), paras);
   }
 
   public Page<User> paginateByBranch(int pageNumber, int pageSize, String where, Object... paras) {
     String selectSql = "SELECT `user`.*,`branch`.name branch_name,`branch`.org_code branch_code ";
-    String fromSql = "FROM sec_user `user`  LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
+    String fromSql = "FROM sec_user `user` " +
+        " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
+        " LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
     return dao.paginate(pageNumber, pageSize, selectSql, fromSql + getWhere(where), paras);
   }
 }

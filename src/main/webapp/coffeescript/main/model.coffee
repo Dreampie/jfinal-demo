@@ -3,5 +3,5 @@ define ['app'], ->
   $ ->
     App.Model.Area = {
       query: (area, success, error)->
-        $.post('/area/query', area).success(success).error(error)
+        $.get('/area/query', area).success(success).error(error)
     }

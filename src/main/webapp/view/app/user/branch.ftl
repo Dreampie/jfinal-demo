@@ -138,7 +138,7 @@
             <label class="col-sm-2 control-label">密码:</label>
 
             <div class="col-sm-8">
-              <input class="form-control" style="width: 60%" type="text" name="user.password" value=""
+              <input class="form-control" style="width: 60%" type="password" name="user.password" value=""
                      placeholder="密码">
             </div>
           </div>
@@ -146,7 +146,7 @@
             <label class="col-sm-2 control-label">确认密码:</label>
 
             <div class="col-sm-8">
-              <input class="form-control" style="width: 60%" type="text" name="repassword" value="${(repassword)!}"
+              <input class="form-control" style="width: 60%" type="password" name="repassword" value="${(repassword)!}"
                      placeholder="确认密码">
             </div>
           </div>

@@ -35,24 +35,8 @@ public class AdminController extends Controller {
     User user = SubjectKit.getUser();
     keepPara("user_search");
 
-    //查询当前用户的角色
-    UserRole userRole = UserRole.dao.findFirstBy("`userRole`.user_id=" + user.get("id"));
-    //当前用户的子集角色
-    List<Role> roles = Role.dao.findChildrenById("`role`.deleted_at is null", userRole.get("role_id"));
-    String roleIds = "";
-    if (roles != null) {
-      int size = roles.size();
-      int i = 0;
-      for (Role role : roles) {
-        roleIds += role.get("id");
-        if (i < size - 1) {
-          roleIds += ",";
-        }
-        i++;
-      }
-    }
     //只能查询当前用户以下的角色
-    String where = " `user`.id <> " + user.get("id") + " AND `userRole`.role_id in (" + roleIds + ")";
+    String where = " `user`.id <> " + user.get("id") + " AND `userRole`.role_id in ("+user.getRoleChildrenIdsStr()+")";
     String user_search = getPara("user_search");
     if (!ValidateKit.isNullOrEmpty(user_search)) {
       where += " AND (INSTR(`user`.username,'" + user_search + "')>0 OR  INSTR(`user`.full_name,'" + user_search + "')>0 "
@@ -64,7 +48,7 @@ public class AdminController extends Controller {
     Page<User> users = User.dao.paginateInfoBy(getParaToInt(0, 1), getParaToInt("pageSize", 15), where);
     Map userGroup = ModelSortKit.sort(users.getList(), "last_name");
 
-    setAttr("roles", roles);
+    setAttr("roles", user.getRoleChildren());
     setAttr("users", users);
     setAttr("userGroup", userGroup);
     setAttr("userStates", State.dao.findBy("`state`.type='user.state'"));

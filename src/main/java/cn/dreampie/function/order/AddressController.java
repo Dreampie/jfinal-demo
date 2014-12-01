@@ -21,6 +21,8 @@ public class AddressController extends Controller {
   public void save() {
     User user = SubjectKit.getUser();
     Address address = getModel(Address.class);
+    if (user.getAddresses() == null || user.getAddresses().size() <= 0)
+      address.set("is_default", 1);
     if (address.set("user_id", user.get("id")).save()) {
       setSuccess("address", address);
     } else {

@@ -28,6 +28,9 @@ define ['app', 'model'], ->
             $(this).change()
         for e in selector
           $(e).multiselect(opt)
+          selval = $(e).find("option:selected").attr("value")
+          if(selval && selval != "")
+            $(e).change()
         rebuild: (selector...)->
           for e in selector
             $(e).multiselect('setOptions', opt)
@@ -36,7 +39,7 @@ define ['app', 'model'], ->
           for e in selector
             opts = $(e).find("option[value!='']")
             opts.remove()
-        reselect:(selector,value)->
+        reselect: (selector, value)->
           $(selector).find("option:selected").removeAttr("selected")
           $(selector).find("option[value='" + value + "']").attr("selected", "selected")
           $(selector).multiselect('setOptions', opt)
@@ -99,9 +102,9 @@ define ['app', 'model'], ->
           if ($(e))
             $(e).each(->
               if($(this).attr("data-start-date"))
-                df.startDate=new Date(Date.parse($(this).attr("data-start-date").replace(/-/g, "/")))
+                df.startDate = new Date(Date.parse($(this).attr("data-start-date").replace(/-/g, "/")))
               if($(this).attr("data-end-date"))
-                df.endDate=new Date(Date.parse($(this).attr("data-end-date").replace(/-/g, "/")))
+                df.endDate = new Date(Date.parse($(this).attr("data-end-date").replace(/-/g, "/")))
               if ($(this).attr("data-date-format"))
                 format = $(this).attr("data-date-format")
                 if (format.length == 7)

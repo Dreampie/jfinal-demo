@@ -37,7 +37,7 @@
            data-date-format="yyyy/mm/dd">
         <input readonly class="form-control" size="10" type="text" name="order.delivered_at"
                value="${.now?string('yyyy/MM/dd')}">
-        <#--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
+      <#--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
       </div>
       <div class="tip"><i class="fa fa-lightbulb-o"></i>按您所在的区域选择规定时间</div>
@@ -47,16 +47,25 @@
     <label class="col-sm-3 control-label">收货地址:</label>
 
     <div class="col-sm-7">
-      <select name="order.address_id">
+      <select name="order.address_id" select="${(order.address_id)!}">
         <#if addresses?? && addresses?size gt 0>
           <#list addresses as address>
-            <option value="${address.id}" data="${address.json}" <#if address.is_default==1 >selected="selected" </#if>>${address.name}</option>
+            <option value="${address.id}" provinceid="${address.province_id}" cityid="${address.city_id}" countyid="${address.county_id}"
+                    street="${address.street}" uname="${address.name}" phone="${address.phone}">${address.name}</option>
           </#list>
         </#if>
-        <option value="">请选择</option>
+        <option value="" selected="selected">请选择</option>
       </select>
 
       <a id="newadr" class="btn btn-default" tabindex="-1" href="javascript:void(0);" value="">新建</a>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label"></label>
+
+    <div class="col-sm-7">
+      <div class="tip addressDetail" style="padding: 10px;"></div>
     </div>
   </div>
 

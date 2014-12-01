@@ -20,6 +20,6 @@ public class UserRole extends Model<UserRole> {
 
 
   public List<String> findUserIds(String where, Object... paras) {
-    return Db.query("SELECT DISTINCT `userRole`.user_id " + SqlKit.sql("userRole.findByExceptSelect") + " " + getWhere(where), paras);
+    return Db.query("SELECT DISTINCT `userRole`.user_id " + SqlKit.sql("userRole.findByFrom") + " " + getWhere(where), paras);
   }
 }

@@ -33,9 +33,25 @@ public class OrderController extends Controller {
   }
 
   @CacheName(AppConstants.DEFAULT_CACHENAME)
+  public void query() {
+    Order o = getModel(Order.class);
+    if (o != null && o.get("id") != null) {
+      Order result = Order.dao.findFirstBy("`order`.id=?", o.get("id"));
+      result.getAddress();
+      result.getProducts();
+      setAttr("order", result);
+    }
+    render(indexView);
+  }
+
+  @CacheName(AppConstants.DEFAULT_CACHENAME)
   public void build() {
     setAttr("products", Product.dao.findBy("deleted_at is null"));
-    setAttr("addresses", Address.dao.findBy(" `address`.user_id=? AND deleted_at is null", SubjectKit.getUser().get("id")));
+    List<Address> addresses = Address.dao.findBy(" `address`.user_id=? AND deleted_at is null", SubjectKit.getUser().get("id"));
+    for (Address address : addresses)
+      if (address.getInt("is_default") == 1)
+        setAttr("order", new Order().set("address_id", address.get("id")));
+    setAttr("addresses", addresses);
     render("/view/app/order/build.ftl");
   }
 
@@ -60,7 +76,7 @@ public class OrderController extends Controller {
         setError();
     } else
       setError();
-    forwardAction("/order");
+    redirect("/order");
   }
 
   @CacheRemove(name = AppConstants.DEFAULT_CACHENAME)
@@ -107,7 +123,7 @@ public class OrderController extends Controller {
 
   @CacheName(AppConstants.DEFAULT_CACHENAME)
   public void region() {
-    keepPara("region_id", "state","started_at");
+    keepPara("region_id", "state", "started_at");
     //region
     Long regionId = getParaToLong("region_id");
     if (regionId == null) regionId = 1L;
@@ -118,7 +134,7 @@ public class OrderController extends Controller {
     List<Order> orders = null;
     if (started_at == null) {
       started_at = DateTime.now().toString("yyyy-MM");
-      setAttr("started_at",started_at);
+      setAttr("started_at", started_at);
     }
     if (state == null) {
       where += " DATE_FORMAT(`order`.receipted_at,'%Y-%m')=? OR DATE_FORMAT(`order`.payed_at,'%Y-%m')=? ";
@@ -156,18 +172,18 @@ public class OrderController extends Controller {
     if (order.getInt("state") != null) {
       where = "`order`.state=" + order.getInt("state") + " AND ";
     }
-
+    String orderby=" ORDER BY `order`.created_at DESC ";
     //branch
     Page<Order> orders = null;
     if (order.get("branch_id") == null) {
       //region
       Long regionId = getParaToLong("region_id");
       if (regionId == null)
-        orders = Order.dao.paginateBy(pageNum, pageSize, where + " `order`.deleted_at is null");
+        orders = Order.dao.paginateBy(pageNum, pageSize, where + " `order`.deleted_at is null "+orderby);
       else
-        orders = Order.dao.paginateByRegion(pageNum, pageSize, where + " `branch`.region_id=?", regionId);
+        orders = Order.dao.paginateByRegion(pageNum, pageSize, where + " `branch`.region_id=? "+orderby, regionId);
     } else
-      orders = Order.dao.paginateByBranch(pageNum, pageSize, where + " `order`.branch_id=?", order.get("branch_id"));
+      orders = Order.dao.paginateByBranch(pageNum, pageSize, where + " `order`.branch_id=? "+orderby, order.get("branch_id"));
 
     setAttr("states", State.dao.findBy("`state`.type=? AND `state`.deleted_at is null", "order.state"));
     setAttr("regions", Region.dao.findBy("`region`.deleted_at is null"));

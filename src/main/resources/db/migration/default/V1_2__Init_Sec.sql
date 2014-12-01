@@ -30,7 +30,7 @@ VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,1,7),(8,1,8),(9,1,9),(
 -- user data--
 -- create  admin--
 INSERT INTO sec_user(id,username, providername, email, phone, password, hasher, salt, avatar_url, first_name, last_name, full_name, created_at)
-VALUES (1,'admin','shengmu','wangrenhui1990@gmail.com','18611434500','$shiro1$SHA-256$500000$iLqsOFPx5bjMGlB0JiNjQQ==$1cPTj9gyPGmYcKGQ8aw3shybrNF1ixdMCm/akFkn71o=','default_hasher','','','仁辉','王','王.仁辉',current_timestamp);
+VALUES (1,'admin','shengmu','wangrenhui1990@gmail.com','18611434500','$shiro1$SHA-256$500000$iLqsOFPx5bjMGlB0JiNjQQ==$1cPTj9gyPGmYcKGQ8aw3shybrNF1ixdMCm/akFkn71o=','default_hasher','','','管理员','圣牧','圣牧.管理员',current_timestamp);
 
 -- create user_info--
 INSERT INTO sec_user_info(id,user_id, creator_id, gender,province_id,city_id,county_id,street,created_at)

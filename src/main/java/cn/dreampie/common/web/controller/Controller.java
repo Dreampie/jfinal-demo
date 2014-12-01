@@ -11,7 +11,7 @@ import java.util.Map;
  * Controller
  */
 public class Controller extends cn.dreampie.web.Controller {
-  static String indexView = "/view/index.ftl";
+  static String indexView = "/view/app/signin.ftl";
   protected Logger logger = LoggerFactory.getLogger(getClass());
 
   public void setSuccess() {
@@ -104,6 +104,6 @@ public class Controller extends cn.dreampie.web.Controller {
   }
 
   public void tosignin() {
-    render("/view/app/signin.ftl");
+    redirect("/");
   }
 }

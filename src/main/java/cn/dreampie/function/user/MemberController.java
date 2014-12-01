@@ -4,6 +4,9 @@ import cn.dreampie.common.config.AppConstants;
 import cn.dreampie.common.web.controller.Controller;
 import cn.dreampie.function.order.model.Branch;
 import cn.dreampie.function.order.model.UserBranch;
+import cn.dreampie.function.user.model.Role;
+import cn.dreampie.function.user.model.UserRole;
+import cn.dreampie.shiro.core.SubjectKit;
 import cn.dreampie.shiro.hasher.HasherInfo;
 import cn.dreampie.shiro.hasher.HasherKit;
 import cn.dreampie.web.cache.CacheRemove;
@@ -12,8 +15,10 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import cn.dreampie.function.order.model.Region;
 import cn.dreampie.function.user.model.User;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wangrenhui on 14-1-3.
@@ -25,17 +30,20 @@ public class MemberController extends Controller {
   }
 
   public void query() {
+    User user = SubjectKit.getUser();
     User u = getModel(User.class);
-    if (u.getLong("id") != null)
-      setAttr("user", User.dao.findFirstBranchBy("`user`.id=?", u.get("id")));
+    if (u.getLong("id") != null) {
+      setAttr("user", User.dao.findFirstBranchBy("`user`.id=? AND `userRole`.role_id in ("+user.getRoleChildrenIdsStr()+")", u.get("id")));
+    }
     render("/view/app/user/detail.ftl");
   }
 
   public void branch() {
+    User user = SubjectKit.getUser();
     keepPara();
     Integer pageNum = getParaToInt(0, 1);
     Integer pageSize = getParaToInt("pageSize", 15);
-    String where = "";
+    String where = " `userRole`.role_id in ("+user.getRoleChildrenIdsStr()+") AND ";
     //branch
     Page<User> users = null;
     if (getParaToLong("branch_id") == null) {
