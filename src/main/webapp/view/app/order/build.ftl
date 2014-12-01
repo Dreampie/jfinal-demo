@@ -51,7 +51,7 @@
         <#if addresses?? && addresses?size gt 0>
           <#list addresses as address>
             <option value="${address.id}" provinceid="${address.province_id}" cityid="${address.city_id}" countyid="${address.county_id}"
-                    street="${address.street}" uname="${address.name}" phone="${address.phone}">${address.name}</option>
+                    street="${address.street}" addressname="${address.name}" phone="${address.phone}">${address.name}</option>
           </#list>
         </#if>
         <option value="" selected="selected">请选择</option>

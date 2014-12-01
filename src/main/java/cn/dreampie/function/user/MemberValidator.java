@@ -22,11 +22,12 @@ public class MemberValidator extends Validator {
           addError("user_usernameMsg", "登录名已存在");
         }
       } else if (c.getPara("do").equals("update")) {
-        if (ValidateKit.isNullOrEmpty(c.getPara("user.id")))
+        boolean idEmpty=ValidateKit.isNullOrEmpty(c.getPara("user.id"));
+        if (idEmpty)
           addError("user_usernameMsg", "用户不存在");
         boolean usernameEmpty = ValidateKit.isNullOrEmpty(c.getPara("user.username"));
         User user = User.dao.findFirstBy("`user`.username=? AND `user`.id <>?", c.getPara("user.username"), c.getPara("user.id"));
-        if (!usernameEmpty && user != null) {
+        if (!idEmpty && !usernameEmpty && user != null) {
           addError("user_usernameMsg", "登录名已存在");
         }
       }

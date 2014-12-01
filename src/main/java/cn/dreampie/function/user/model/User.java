@@ -113,7 +113,9 @@ public class User extends cn.dreampie.shiro.model.User<User> {
   }
 
   public Branch getBranch() {
-    return Branch.dao.findById(getBranchId());
+    if (this.get("branch") == null)
+      this.set("branch", Branch.dao.findById(getBranchId()));
+    return this.get("branch");
   }
 
   public Long getBranchId() {
@@ -156,7 +158,7 @@ public class User extends cn.dreampie.shiro.model.User<User> {
   }
 
   public Page<User> paginateByRegion(int pageNumber, int pageSize, String where, Object... paras) {
-    String selectSql = "SELECT `user`.*,`branch`.name branch_name,`branch`.org_code branch_code ";
+    String selectSql = "SELECT `user`.*,`branch`.id branch_id,`branch`.region_id region_id,`branch`.name branch_name,`branch`.org_code branch_code ";
     String fromSql = "FROM sec_user `user` " +
         " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
         " LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";
@@ -164,7 +166,7 @@ public class User extends cn.dreampie.shiro.model.User<User> {
   }
 
   public Page<User> paginateByBranch(int pageNumber, int pageSize, String where, Object... paras) {
-    String selectSql = "SELECT `user`.*,`branch`.name branch_name,`branch`.org_code branch_code ";
+    String selectSql = "SELECT `user`.*,`branch`.id branch_id,`branch`.region_id region_id,`branch`.name branch_name,`branch`.org_code branch_code ";
     String fromSql = "FROM sec_user `user` " +
         " LEFT JOIN sec_user_role `userRole` ON(`user`.id=`userRole`.user_id) " +
         " LEFT JOIN ord_user_branch `userBranch` ON(`userBranch`.user_id=`user`.id) LEFT JOIN ord_branch `branch` ON(`userBranch`.branch_id=`branch`.id) ";

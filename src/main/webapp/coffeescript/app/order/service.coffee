@@ -131,7 +131,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                     if(area.id == id * 1)
                       names[names.length] = area.name
                 names[names.length] = address.attr("street")
-                $("div.addressDetail").html(address.attr("uname") + "," + address.attr("phone") + "<br/>" + names.toString())
+                $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + names.toString())
             )
         )
         if(addrselect.attr("select") && addrselect.attr("select") != "")
@@ -144,10 +144,9 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
+                td = t.parent()
                 t.remove()
-#                td = t.parent()
-#                td.html("")
-#                td.siblings().eq(td.index() - 1).find("a.receive").remove()
+                td.siblings().eq(td.index() - 1).text("已接收")
           )
         )
       deliver: ->
@@ -158,10 +157,9 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
+                td = t.parent()
                 t.remove()
-#                td = t.parent()
-#                td.html("")
-#                td.siblings().eq(td.index() - 1).find("a.deliver").remove()
+                td.siblings().eq(td.index() - 1).text("已发货")
           )
         )
       receipt: ->
@@ -172,10 +170,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
+                td = t.parent()
                 t.remove()
-#                td = t.parent()
 #                td.html("<a class='pay' href='" + t.attr("orderid") + "'>付款</a>")
-#                td.siblings().eq(td.index() - 1).find("a.receipt").remove()
+                td.siblings().eq(td.index() - 1).text("已收货")
           )
         )
       cancel: ->
@@ -186,10 +184,9 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
+                td = t.parent()
                 t.remove()
-#                td = t.parent()
-#                td.html("")
-#                td.siblings().eq(td.index() - 1).find("a.cancel").remove()
+                td.siblings().eq(td.index() - 1).text("已取消")
           )
         )
       save: (form = 'form.save', btn = 'button.submit', diser = '#newadrDiv')->

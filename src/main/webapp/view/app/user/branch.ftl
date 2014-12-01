@@ -7,17 +7,17 @@
   <div class="form-group">
     <label class="control-label" style="text-align: left;width: 100px;">区域/支行:</label>
 
-      <select name="region_id" select="${region_id!}">
-        <#if regions?? && regions?size gt 0>
-          <#list regions as region>
-            <option value="${region.id}">${region.name}</option>
-          </#list>
-        </#if>
-        <option value="" selected="selected">请选择</option>
-      </select>
-      <select name="branch_id" select="${(branch_id)!}">
-        <option value="" selected="selected">请选择</option>
-      </select>
+    <select name="region_id" select="${region_id!}">
+      <#if regions?? && regions?size gt 0>
+        <#list regions as region>
+          <option value="${region.id}">${region.name}</option>
+        </#list>
+      </#if>
+      <option value="" selected="selected">请选择</option>
+    </select>
+    <select name="branch_id" select="${(branch_id)!}">
+      <option value="" selected="selected">请选择</option>
+    </select>
 
   </div>
 
@@ -39,6 +39,7 @@
     <th>联系电话</th>
     <th>登录名</th>
     <th>创建时间</th>
+    <th>状态</th>
     <@shiro.hasPermission name="P_USER_CONTROL">
       <th>操作</th>
     </@shiro.hasPermission>
@@ -54,11 +55,22 @@
         <td>${(user.phone)!}</td>
         <td>${(user.username)!}</td>
         <td>${(user.created_at)!}</td>
+        <td>
+          <#if user.deleted_at??>
+            已删除
+          <#else>
+            正常
+          </#if>
+        </td>
         <@shiro.hasPermission name="P_USER_CONTROL">
           <td>
-            <a class="update" userid="${user.id}" href="#updateModal" data-toggle="modal">修改</a>
-            <a class="delete" userid="${user.id}" href="#confirmModal" data-toggle="modal"
-               data-label="删除" data-content="确认删除？">删除</a>
+            <a class="update" firstname="${user.first_name}" lastname="${user.last_name}" branchid="${user.branch_id}" regionid="${user.region_id}"
+               username="${user.username}" userid="${user.id}" phone="${user.phone}" deletedat="${(user.deleted_at)!}" href="#updateModal"
+               data-toggle="modal">修改</a>
+            <#if user.deleted_at??><#else>
+              <a class="delete" userid="${user.id}" href="#confirmModal" data-toggle="modal"
+                 data-label="删除" data-content="确认删除？">删除</a>
+            </#if>
           </td>
         </@shiro.hasPermission>
       </tr>
@@ -111,9 +123,11 @@
 
             <div class="col-sm-8">
               <div class="input-group">
-                <input class="form-control" style="width: 20%;padding-right: 12px !important;" type="text" name="user.last_name" value="${(user.last_name)!}"
+                <input class="form-control" style="width: 20%;padding-right: 12px !important;" type="text" name="user.last_name"
+                       value="${(user.last_name)!}"
                        placeholder="姓">
-                <input class="form-control" style="width: 25%;padding-right: 12px !important;" type="text" name="user.first_name" value="${(user.first_name)!}"
+                <input class="form-control" style="width: 25%;padding-right: 12px !important;" type="text" name="user.first_name"
+                       value="${(user.first_name)!}"
                        placeholder="名">
               </div>
             </div>
@@ -209,9 +223,11 @@
 
             <div class="col-sm-8">
               <div class="input-group">
-                <input class="form-control" style="width: 20%;padding-right: 12px !important;" type="text" name="user.last_name" value="${(user.last_name)!}"
+                <input class="form-control" style="width: 20%;padding-right: 12px !important;" type="text" name="user.last_name"
+                       value="${(user.last_name)!}"
                        placeholder="姓">
-                <input class="form-control" style="width: 25%;padding-right: 12px !important;" type="text" name="user.first_name" value="${(user.first_name)!}"
+                <input class="form-control" style="width: 25%;padding-right: 12px !important;" type="text" name="user.first_name"
+                       value="${(user.first_name)!}"
                        placeholder="名">
               </div>
             </div>
@@ -246,6 +262,17 @@
             <div class="col-sm-8">
               <input class="form-control" style="width: 60%" type="text" name="repassword" value="${(repassword)!}"
                      placeholder="确认密码">
+            </div>
+          </div>
+          <div class="form-group deleted_at" style="display: none">
+            <label class="col-sm-2 control-label">删除时间:</label>
+
+            <div class="col-sm-8">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="reuse" value="true"><span></span>(选中重新启用)
+                </label>
+              </div>
             </div>
           </div>
           <div class="form-group">
