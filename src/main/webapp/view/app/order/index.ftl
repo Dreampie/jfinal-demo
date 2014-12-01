@@ -51,7 +51,7 @@
           <#if order.state==3>
             <#if order.payed_at??>
             <#else>
-              <a class="pay">付款</a>
+              <#--<a class="pay">付款</a>-->
             </#if>
           </#if>
           <#if order.state==2>

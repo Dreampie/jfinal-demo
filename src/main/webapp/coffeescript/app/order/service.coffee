@@ -144,9 +144,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
-                td = t.parent()
-                td.html("")
-                td.siblings().eq(td.index() - 1).text("已接收")
+                t.remove()
+#                td = t.parent()
+#                td.html("")
+#                td.siblings().eq(td.index() - 1).find("a.receive").remove()
           )
         )
       deliver: ->
@@ -157,9 +158,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
-                td = t.parent()
-                td.html("")
-                td.siblings().eq(td.index() - 1).text("已发货")
+                t.remove()
+#                td = t.parent()
+#                td.html("")
+#                td.siblings().eq(td.index() - 1).find("a.deliver").remove()
           )
         )
       receipt: ->
@@ -170,9 +172,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
-                td = t.parent()
-                td.html("<a class='pay' href='" + t.attr("orderid") + "'>付款</a>")
-                td.siblings().eq(td.index() - 1).text("已收货")
+                t.remove()
+#                td = t.parent()
+#                td.html("<a class='pay' href='" + t.attr("orderid") + "'>付款</a>")
+#                td.siblings().eq(td.index() - 1).find("a.receipt").remove()
           )
         )
       cancel: ->
@@ -183,9 +186,10 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             (data)->
               if(data.state == 'success')
                 modal.modal("hide")
-                td = t.parent()
-                td.html("")
-                td.siblings().eq(td.index() - 1).find("a.cancel").remove()
+                t.remove()
+#                td = t.parent()
+#                td.html("")
+#                td.siblings().eq(td.index() - 1).find("a.cancel").remove()
           )
         )
       save: (form = 'form.save', btn = 'button.submit', diser = '#newadrDiv')->
