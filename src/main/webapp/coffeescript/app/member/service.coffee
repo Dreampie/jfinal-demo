@@ -164,9 +164,13 @@ define ['app', 'bootstrapvalidator.zh_CN', 'user.model', 'order.model'], ->
           $(modal).on('show.bs.modal',(e)->
             btn=$(e.relatedTarget)
             $(this).find("input[name='user.id']").val(btn.attr("userid"))
-            $(this).find("select[name='region_id']").attr("select",btn.attr("regionid"))
-            $(this).find("select[name='branch_id']").attr("select",btn.attr("branchid"))
-            App.Service.ConfigSrv.multiselect().rebuild("select[name='region_id']","select[name='branch_id']")
+#            $(this).find("select[name='region_id']").attr("select",btn.attr("regionid"))
+#            $(this).find("select[name='branch_id']").attr("select",btn.attr("branchid"))
+
+            regselect = $(this).find("select[name='region_id']")
+            brhselect = $(this).find("select[name='branch_id']")
+            App.Service.ConfigSrv.multiselect().reselect(regselect,btn.attr("regionid"))
+            App.Service.ConfigSrv.multiselect().reselect(brhselect,btn.attr("branchid"))
             $(this).find("input[name='user.first_name']").val(btn.attr("firstname"))
             $(this).find("input[name='user.last_name']").val(btn.attr("lastname"))
             $(this).find("input[name='user.phone']").val(btn.attr("phone"))
