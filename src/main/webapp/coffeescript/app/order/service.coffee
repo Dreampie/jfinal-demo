@@ -119,10 +119,13 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
           address = $(this).find("option:selected")
           ids = [address.attr("provinceid"), address.attr("cityid"), address.attr("countyid")]
           names = []
+          spare = ""
           if $.areapicker.areas
             names = $.areapicker.Op.getName(ids)
             names[names.length] = address.attr("street")
-            $("div.addressDetail").text(names.toString())
+            if(address.attr("sparename") != "")
+              spare = address.attr("sparename") + "," + address.attr("sparephone") + "<br/>"
+            $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + spare + names.toString())
           else
             App.Model.Area.query("ids": ids.toString(), (data)->
               if(data.areas)
@@ -131,7 +134,9 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                     if(area.id == id * 1)
                       names[names.length] = area.name
                 names[names.length] = address.attr("street")
-                $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + names.toString())
+                if(address.attr("sparename") != "")
+                  spare = address.attr("sparename") + "," + address.attr("sparephone") + "<br/>"
+                $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + spare + names.toString())
             )
         )
         if(addrselect.attr("select") && addrselect.attr("select") != "")
@@ -172,7 +177,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                 modal.modal("hide")
                 td = t.parent()
                 t.remove()
-#                td.html("<a class='pay' href='" + t.attr("orderid") + "'>付款</a>")
+                #                td.html("<a class='pay' href='" + t.attr("orderid") + "'>付款</a>")
                 td.siblings().eq(td.index() - 1).text("已收货")
           )
         )
@@ -290,9 +295,15 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
             if(data.state == 'success')
               $(toggle).text('新建')
               newadrDiv.hide()
-              o = $("<option value='" + data.address.id + "' provinceid='" + data.address.province_id +
-                "' cityid='" + data.address.city_id + "'   countyid='" + data.address.county_id +
-                "' street='" + data.address.street + "'>" + data.address.name + "</option>")
+              o = $("<option value='" + data.address.id + "'>" + data.address.name + "</option>")
+              $(o).attr("provinceid", data.address.province_id)
+              $(o).attr("cityid", data.address.city_id)
+              $(o).attr("countyid", data.address.county_id)
+              $(o).attr("street", data.address.street)
+              $(o).attr("addressname", data.address.name)
+              $(o).attr("phone", data.address.phone)
+              $(o).attr("sparename", data.address.spare_name)
+              $(o).attr("sparephone", data.address.spare_phone)
               select = $("select[name='order.address_id']")
               select.find("option[value='']").before(o)
               App.Service.ConfigSrv.multiselect().reselect("select[name='order.address_id']", data.address.id)
