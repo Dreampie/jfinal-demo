@@ -114,7 +114,7 @@ public class User extends cn.dreampie.shiro.model.User<User> {
 
   public Branch getBranch() {
     if (this.get("branch") == null)
-      this.set("branch", Branch.dao.findById(getBranchId()));
+      this.put("branch", Branch.dao.findById(getBranchId()));
     return this.get("branch");
   }
 

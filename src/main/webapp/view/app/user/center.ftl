@@ -12,7 +12,8 @@
           <label for="username" class="col-sm-2 control-label">用 户 名:</label>
 
           <div class="col-sm-8">
-          ${(user.full_name)!}(${(user.username)!})
+          ${(user.full_name)!}(${(user.username)!})<br>
+          ${(user.branch.name)!}(${(user.phone)!})
           </div>
         </div>
         <div class="form-group">
