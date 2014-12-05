@@ -67,6 +67,8 @@ public class AppConfig extends JFinalConfig {
   public void configRoute(Routes routes) {
     this.routes = routes;
     RouteBind routeBind = new RouteBind();
+//    routeBind.addExcludePaths("cn.dreampie.exc");
+//    routeBind.addIncludePaths("cn.dreampie.inc");
     routes.add(routeBind);
   }
 
