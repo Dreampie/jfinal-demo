@@ -59,6 +59,16 @@
       <button type="submit" class="btn btn-primary">登&nbsp;录</button>
     </div>
   </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"></label>
+
+    <div class="col-sm-8">
+      Github大量jfinal插件库，<a href="https://github.com/Dreampie">Dreampie</a><br>
+      本项目源码，<a href="https://github.com/Dreampie/jfinal-demo">jfinal-demo</a><br>
+      本项目帐号，admin/shengmu
+    </div>
+  </div>
 </form>
+
 </@layout>
 

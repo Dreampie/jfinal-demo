@@ -13,8 +13,9 @@ import java.util.UUID;
 public class Token extends Model<Token> {
   public static Token dao = new Token();
 
-  public Token() {
+  public boolean save() {
     this.set("uuid", UUID.randomUUID());
+    return super.save();
   }
 
 }
