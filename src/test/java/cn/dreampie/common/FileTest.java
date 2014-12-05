@@ -14,8 +14,9 @@ public class FileTest {
 
   @Test
   public void testCreate() {
-    File srcDir = new File("/home/ice/IdeaProjects/jfinal/src/com/jfinal/");
-    File destDir = new File("/home/ice/IdeaProjects/package/com/sfinal/");
+//    System.out.println(FileTest.class.getResource(""));
+    File srcDir = new File("/Users/wangrenhui/IdeaProjects/jfinal-master/src/com/jfinal/");
+    File destDir = new File("/Users/wangrenhui/IdeaProjects/package/com/sfinal/");
     createFiles(srcDir, destDir, srcDir);
   }
 
@@ -29,9 +30,10 @@ public class FileTest {
         for (File file : filesInSrcDir) {
           try {
             path = file.getAbsolutePath().replace(srcDir.getAbsolutePath(), destDir.getAbsolutePath()).replace(".java", ".scala");
-            System.out.println("src:" + srcDir.getAbsolutePath());
-            System.out.println("dest:" + destDir.getAbsolutePath());
-            System.out.println("path:" + path);
+            System.out.println(srcDir.getAbsolutePath() + "&&&&&&" + destDir.getAbsolutePath());
+            System.out.println("src:" + file.getAbsolutePath());
+            System.out.println("dest:" + path);
+            System.out.println("-------------------------------");
             destFile = new File(path);
             if (!destFile.getParentFile().exists())
               destFile.getParentFile().mkdirs();
@@ -43,7 +45,7 @@ public class FileTest {
         //目录
         File[] dirs = childDir.listFiles((FileFilter) DirectoryFileFilter.DIRECTORY);
         for (File file : dirs) {
-          createFiles(childDir, destDir, file);
+          createFiles(srcDir, destDir, file);
         }
       }
     }
