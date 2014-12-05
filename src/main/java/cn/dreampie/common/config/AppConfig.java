@@ -39,7 +39,7 @@ import java.util.Locale;
  * Time: 下午6:28
  * API引导式配置
  */
-public class AppConfig extends Config {
+public class AppConfig extends JFinalConfig {
   /**
    * 供Shiro插件使用。
    */

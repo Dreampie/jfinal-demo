@@ -68,15 +68,10 @@ public class MyJdbcRealm extends AuthorizingRealm {
     Set<String> roleSet = new LinkedHashSet<String>(); // 角色集合
     Set<String> permissionSet = new LinkedHashSet<String>();  // 权限集合
     List<Role> roles = null;
-//    if (loginName.equalsIgnoreCase(MyAnonymousFilter.getUsername())) {
-//      //遍历角色
-//      roles = Role.me().findByRoleKey(MyAnonymousFilter.getRole());
-//    } else {
     User user = User.dao.findFirstBy(" `user`.username =? AND `user`.deleted_at is null", loginName);
     if (user != null) {
       //遍历角色
       roles = Role.dao.findUserBy("", user.getLong("id"));
-//        }
     } else {
       SubjectKit.getSubject().logout();
     }

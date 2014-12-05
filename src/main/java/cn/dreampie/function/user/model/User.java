@@ -7,6 +7,7 @@ import cn.dreampie.function.order.model.Order;
 import cn.dreampie.function.order.model.UserBranch;
 import cn.dreampie.sqlinxml.SqlKit;
 import cn.dreampie.tablebind.TableBind;
+import cn.dreampie.web.model.Model;
 import com.jfinal.plugin.activerecord.Page;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by wangrenhui on 14-1-3.
  */
 @TableBind(tableName = "sec_user")
-public class User extends cn.dreampie.shiro.model.User<User> {
+public class User extends Model<User> {
   public static User dao = new User();
 
   public User addUserInfo(UserInfo userInfo) {
