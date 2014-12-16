@@ -26,7 +26,7 @@
   </div>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <div class="form-group pull-right">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#saveModal">新用户</button>
   </div>
 </form>
 
