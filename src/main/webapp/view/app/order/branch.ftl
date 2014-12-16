@@ -22,7 +22,7 @@
 
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-default">搜索</button>
+    <button type="submit" class="btn btn-primary">搜索</button>
   </div>
 </form>
 <ul class="nav nav-tabs menu-tabs" role="tablist" style="margin-bottom: 10px">

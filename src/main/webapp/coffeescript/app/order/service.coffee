@@ -123,7 +123,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
           if $.areapicker.areas
             names = $.areapicker.Op.getName(ids)
             names[names.length] = address.attr("street")
-            if(address.attr("sparename") != "")
+            if(address.attr("sparename") && address.attr("sparename") != "")
               spare = address.attr("sparename") + "," + address.attr("sparephone") + "<br/>"
             $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + spare + names.toString())
           else
@@ -134,7 +134,7 @@ define ['app', 'bootstrapvalidator.zh_CN', 'order.model'], ->
                     if(area.id == id * 1)
                       names[names.length] = area.name
                 names[names.length] = address.attr("street")
-                if(address.attr("sparename") != "")
+                if(address.attr("sparename") && address.attr("sparename") != "")
                   spare = address.attr("sparename") + "," + address.attr("sparephone") + "<br/>"
                 $("div.addressDetail").html(address.attr("addressname") + "," + address.attr("phone") + "<br/>" + spare + names.toString())
             )

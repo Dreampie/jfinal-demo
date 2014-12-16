@@ -22,10 +22,10 @@
   </div>
 
   <div class="form-group">
-    <button type="submit" class="btn btn-default">搜索</button>
+    <button type="submit" class="btn btn-primary">搜索</button>
   </div>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <div class="form-group">
+  <div class="form-group pull-right">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">新用户</button>
   </div>
 </form>
