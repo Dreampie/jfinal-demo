@@ -1,6 +1,8 @@
 jfinal_demo [在线访问](http://jf_demo.jd-app.com)
 ===========
 
+推荐java的restful框架：[Resty](https://github.com/Dreampie/resty)
+
 jfinal+bootstrap+coffeescript+lesscss+jfinal-dreampie(jfinal插件集)
 
 jfinal demo  程序，使用bootstrap+本人编写的多款插件
