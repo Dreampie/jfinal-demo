@@ -65,7 +65,8 @@
     <div class="col-sm-8">
       Github大量jfinal插件库，<a href="https://github.com/Dreampie">Dreampie</a><br>
       本项目源码，<a href="https://github.com/Dreampie/jfinal-demo">jfinal-demo</a><br>
-      本项目帐号，admin/shengmu
+      本项目帐号，admin/shengmu<br><br>
+      [<span style="color: red;font-size: 16px">强烈推荐</span>] 极简restful+activerecord框架,代码比ssh省至少60%,简洁orm,轻量级(核心代码只有190K左右) 源码链接 <a href="https://github.com/Dreampie/resty">Resty</a><br>
     </div>
   </div>
 </form>
