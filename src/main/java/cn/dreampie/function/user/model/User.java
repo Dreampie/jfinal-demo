@@ -85,7 +85,7 @@ public class User extends Model<User> {
       if (roles != null) {
         int i = 0;
         for (Role role : roles) {
-          roleIds[i] = role.get("id");
+          roleIds[i] = role.getLong("id");
           i++;
         }
       }

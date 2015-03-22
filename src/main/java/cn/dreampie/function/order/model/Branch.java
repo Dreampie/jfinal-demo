@@ -14,7 +14,7 @@ public class Branch extends Model<Branch> {
   public static Branch dao=new Branch();
 
   public List<User> getUsers(){
-    if(this.get("users")){
+    if(this.get("users")!=null){
       this.set("users",User.dao.findByBranch("`userBranch`.branch_id",this.getLong("id")));
     }
     return this.get("users");
